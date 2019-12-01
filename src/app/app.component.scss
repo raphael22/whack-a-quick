@@ -26,7 +26,7 @@ main{
     left: -$board-size;
     height: 100%;
     width: $board-size;
-    background: adjust-color($board-color, $lightness: 10%);
+    background: adjust-color($board-color, $lightness: 5%);
     transform: skewY(-45deg);
   }
   &:after{
@@ -34,8 +34,37 @@ main{
     left: -$board-size/2;
     height: $board-size;
     width: 100%;
-    background: adjust-color($board-color, $lightness: 20%);
+    background: adjust-color($board-color, $lightness: 10%);
     transform: skewX(-45deg);
+  }
+}
+
+.main-floor{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 50vh;
+  height: 50vh;
+  transform: translate(-76%, -24%);
+  background: adjust-color($board-color, $lightness: 15%);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  perspective: 50vh;
+  padding: 10px;
+  border-radius: 1px;
+  z-index: 1;
+  pointer-events: none;
+  &:before{
+    content: '';
+    position: absolute;
+    border-radius: 1px;
+    top: -50px;
+    right: -100px;
+    height: 100%;
+    width: 100px;
+    background: adjust-color($board-color, $lightness: 20%);
+    transform: skewY(-45deg);
+    z-index: 999;
   }
 }
 
