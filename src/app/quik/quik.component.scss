@@ -1,0 +1,67 @@
+
+$quik-color: red;
+$quik-margin: 10px;
+$quik-size: calc(100%/4 - #{$quik-margin * 2});
+
+
+:host{
+  position: relative;
+  width: $quik-size;
+  padding-top: $quik-size;
+  margin: $quik-margin;
+}
+
+.quik {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $quik-color;
+  transition: all 0.5s ease-in-out;
+  animation: quik 10s infinite;
+  z-index: 2;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &:hover{
+      background: adjust-color($quik-color, $lightness: 50%);
+      transform: scale(0) translate3d(30px, 0, 0);
+      animation-play-state: paused;
+  }
+  &:before,
+  &:after{
+    content: '';
+    position: absolute;
+    border-radius: 1px;
+  }
+  &:before{
+    z-index: -1;
+    top: calc(100%/4);
+    left: calc(-100%/2);
+    height: 100%;
+    width: calc(100%/2);
+    background: adjust-color($quik-color, $lightness: -10%);
+    transform: skewY(-45deg);
+  }
+  &:after{
+    z-index: 1;
+    bottom: calc(-100%/2);
+    left: calc(-100%/4);
+    height: calc(100%/2);
+    width: 100%;
+    background: adjust-color($quik-color, $lightness: 20%);
+    transform: skewX(-45deg);
+  }
+}
+
+@keyframes quik {
+  0%,100%{
+    transform: scale(1) translate3d(-30px, 30px, 0);
+  }
+  50%{
+    transform: scale(1) translate3d(30px, -30px, 0);
+  }
+}

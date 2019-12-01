@@ -1,5 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { IQuik } from './quik/quik.component';
+import { QuikService } from './quik.service';
 
 @Component({
   selector: 'app-root',
@@ -7,29 +9,14 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  public moles = [];
+  public quiks: IQuik[] = [];
+  public level: number = 4;
 
-  private images: string[] = [
-    './assets/caddic.png',
-    './assets/né.png',
-    './assets/lorcy.png',
-    './assets/pellier.png'
-  ];
-
-  constructor(private sanitizer: DomSanitizer) {
-    const moles = [];
-    for (let index = 0; index < 16; index++) {
-      const id = index;
-      const row = Math.ceil((id + 1) / 4);
-      moles.push({
-        id,
-        row,
-        zIndex: row * (4 - id % 4),
-        image: this.sanitizer.bypassSecurityTrustUrl(this.images[Math.floor(Math.random() * this.images.length)])
-      });
-    }
-    this.moles = moles;
-    console.log(this.moles);
+  constructor(private quikService: QuikService) {
+    this.level = 4;
+    this.quikService.init(this.level);
+    this.quiks = this.quikService.getQuiks();
+    console.log(this.quiks);
   }
 
   ngAfterViewInit() {

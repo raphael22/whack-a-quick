@@ -1,9 +1,5 @@
 <main>
-  <div class="moles">
-    <div class="mole-hole" *ngFor="let mole of moles" [id]="mole.id" [style.zIndex]="mole.zIndex">
-      <div class="mole">
-        <img [src]="mole.image">
-      </div>
-    </div>
+  <div class="quiks">
+    <quik *ngFor="let quik of quiks" [quik]="quik"></quik>
   </div>
 </main>
