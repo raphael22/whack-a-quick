@@ -3,15 +3,20 @@ import { ReplaySubject } from 'rxjs';
 import { IQuik } from './quik/quik.component';
 
 export interface IConfig {
-  level: number
+  level: number,
+  timeout?: number
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuikService {
-  private config: IConfig;
-  public config$: ReplaySubject<IConfig> = new ReplaySubject(1);
+  private state: boolean;
+  public state$: ReplaySubject<boolean> = new ReplaySubject(1);
+  private stopTimeout: any;
+  public config: IConfig;
+  public timer: number;
+  private timerInterval: any;
 
   public quiks: IQuik[] = [];
   private images: string[] = [
@@ -34,22 +39,56 @@ export class QuikService {
     })
   }
 
-  private setConfig(config) {
+  public start() {
+    this.clear();
+    this.setState(true);
+    this.timer = this.config.timeout;
+    this.stopTimeout = setTimeout(this.stopOnTimeout.bind(this), this.config.timeout);
+    this.timerInterval = setInterval(() => this.timer = this.timer - 1000, 1000);
+  }
+  public stopOnTimeout() {
+    this.checkVictory(true);
+    this.stop();
+  }
+
+  public stop() {
+    this.setState(false);
+    this.timer = 0;
+    clearInterval(this.timerInterval);
+  }
+
+  public checkVictory(onStop: boolean = false) {
+    if (this.quiks.filter(q => q.active).length === 0) {
+      alert('winner !');
+      this.stop();
+    } else if (onStop) {
+      alert('looser !');
+    }
+  }
+
+  private setState(state: boolean) {
+    this.state = state;
+    this.state$.next(this.state);
+  }
+
+  private setConfig(config: IConfig) {
+    config.timeout = config.level * 5000;
     this.config = config;
-    this.config$.next(this.config);
   }
 
   initQuiks() {
     const { level } = this.config;
-
+    const quiks: IQuik[] = []
     for (let index = 0; index < Math.pow(level, 2); index++) {
       const row = Math.ceil((index + 1) / level);
-      this.quiks.push({
+      quiks.push({
         index,
         row,
-        level
+        level,
+        active: true
       });
     }
+    this.quiks = quiks;
   }
 
   public getQuiks() {
@@ -58,5 +97,10 @@ export class QuikService {
 
   public getRandomImage() {
     return this.images[Math.floor(Math.random() * this.images.length)];
+  }
+
+  public clear() {
+    clearInterval(this.timerInterval);
+    clearTimeout(this.stopTimeout);
   }
 }

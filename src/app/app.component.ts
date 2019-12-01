@@ -9,17 +9,28 @@ import { IQuik } from './quik/quik.component';
 })
 export class AppComponent {
   public quiks: IQuik[] = [];
-  public config: IConfig;
 
-  constructor(private quikService: QuikService) {
+  constructor(public quikService: QuikService) {
     this.init({
       level: 3
     });
   }
 
+  public start() {
+    this.quikService.start();
+  }
+
+  public setLevel(level) {
+    this.restart({ level })
+  }
+
+  restart(config: IConfig) {
+    this.quikService.stop();
+    this.init(config);
+  }
+
   init(config: IConfig) {
-    this.config = config;
-    this.quikService.init(this.config)
+    this.quikService.init(config)
       .then(this.onInitSuccess.bind(this))
       .catch(this.onInitError.bind(this))
       .finally(this.onInitFinally.bind(this));

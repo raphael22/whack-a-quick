@@ -1,3 +1,14 @@
+<div class="ui">
+  <button (click)="start()">start</button>
+  <p *ngIf="quikService.state == true">{{quikService.timer / 1000}}</p>
+  <div>
+    <button (click)="setLevel(3)">easy</button>
+    <button (click)="setLevel(4)">medium</button>
+    <button (click)="setLevel(5)">hard</button>
+    <button (click)="setLevel(6)">infernal</button>
+  </div>
+</div>
+
 <main>
   <div class="main-floor"></div>
   <div class="quiks">

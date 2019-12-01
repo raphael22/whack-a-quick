@@ -4,7 +4,7 @@ $quik-translate: 50px;
 
 :host{
   position: relative;
-  cursor: url('/assets/cursor.jpg'), pointer;
+  cursor: url('/assets/cursor-hover.png') 32 32, pointer;
   background-color: $quik-color;
   transition: all 0.5s ease-in-out;
   animation-name: quik;
@@ -14,7 +14,7 @@ $quik-translate: 50px;
   z-index: 2;
   transform-origin: center center;
   transform: scale(1) translate3d(-$quik-translate, $quik-translate, 0);
-  opacity: 0.25;
+  opacity: 0.1;
   pointer-events: none; 
   &:hover{
       background: adjust-color($quik-color, $lightness: 50%);
@@ -45,7 +45,7 @@ $quik-translate: 50px;
     transform: skewX(-45deg);
   }
   &.hidden{
-    animation-name: none;
+    animation-name: none !important;
   }
 }
 
@@ -63,7 +63,7 @@ img{
 @keyframes quik {
   0%,100%{
     transform: scale(1) translate3d(-$quik-translate, $quik-translate, 0);
-    opacity: 0.25;
+    opacity: 0.1;
     pointer-events: none;
   }
   33%,66%{

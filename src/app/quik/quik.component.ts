@@ -6,6 +6,7 @@ export interface IQuik {
   index: number
   row: number
   level: number
+  active: boolean
 }
 
 @Component({
@@ -19,12 +20,14 @@ export class QuikComponent implements OnInit, OnDestroy {
   private style: CSSStyleDeclaration;
   public image: SafeUrl;
   public animationDuration: string;
+  private animationName = 'quik'
 
   constructor(
     private element: ElementRef<HTMLDivElement>,
     private sanitizer: DomSanitizer,
     private quikService: QuikService
   ) {
+    this.quikService.state$.subscribe((state) => state ? this.start() : this.stop());
   }
 
   ngOnInit() {
@@ -37,9 +40,17 @@ export class QuikComponent implements OnInit, OnDestroy {
     this.style.paddingTop = size;
     this.style.margin = `${margin}px`;
 
-    this.setAnimation();
-
     this.setImage();
+  }
+
+  public start() {
+    this.hidden = false;
+    this.startAnimation();
+  }
+  public stop() {
+    if (this.style) {
+      this.style.animationName = 'none';
+    }
   }
 
   private setImage() {
@@ -47,26 +58,29 @@ export class QuikComponent implements OnInit, OnDestroy {
     this.image = this.sanitizer.bypassSecurityTrustUrl(randomQuik);
   }
 
-  setAnimation() {
+  private startAnimation() {
     this.style.animationDuration = this.getRandomDuration();
+    this.style.animationName = this.animationName;
   }
+
   private getRandomDuration() {
-    return Math.floor(Math.random() * 2000) + 500 + 'ms';
+    return Math.round(Math.random() * 1500) + 500 + 'ms';
   }
 
   @HostListener('animationiteration')
   onAnimationEnd() {
-    const animation = this.style.animationName;
     this.style.animationName = 'none';
     setTimeout(() => {
       this.style.animationDuration = this.getRandomDuration();
-      this.style.animationName = animation;
+      this.style.animationName = this.animationName;
     })
   }
 
   onClick() {
     console.log('click', event);
     this.hidden = true;
+    this.quik.active = false;
+    this.quikService.checkVictory();
   }
 
   ngOnDestroy() {
