@@ -64,7 +64,7 @@ export class QuikComponent implements OnInit, OnDestroy {
   }
 
   private getRandomDuration() {
-    return Math.round(Math.random() * 1500) + 500 + 'ms';
+    return Math.round(Math.random() * 1500) + 750 + 'ms';
   }
 
   @HostListener('animationiteration')
