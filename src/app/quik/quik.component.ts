@@ -40,6 +40,7 @@ export class QuikComponent implements OnInit, OnDestroy {
 
   public start() {
     this.hidden = false;
+    this.quik.active = true;
     this.startAnimation();
   }
   public stop() {

@@ -69,7 +69,7 @@ export class QuikService {
   }
 
   public checkVictory(onTimeout: boolean = false) {
-    if (this.quiks.filter(q => q.active).length === 0) {
+    if (this.quiks.filter(q => q.active === true).length === 0) {
       this.setPlayerState(`bravo !`);
       this.stop();
     } else if (onTimeout) {
