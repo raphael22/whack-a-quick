@@ -4,7 +4,7 @@ $quik-translate: 50px;
 
 :host{
   position: relative;
-  cursor: url('/assets/cursor-hover.png') 12 24, pointer;
+  cursor: url('/assets/cursor-hover.png') 24 36, pointer;
   background-color: $quik-color;
   transition: all 0.5s ease-in-out;
   animation-name: quik;
@@ -58,6 +58,7 @@ img{
   object-fit: cover;
   border-radius: 1px;
   overflow: hidden;
+  user-select: none;
 }
 
 @keyframes quik {

@@ -1,13 +1,8 @@
 import { Component, Input, OnInit, ElementRef, HostListener, OnDestroy, HostBinding, ViewChild, AfterViewInit, ViewContainerRef } from '@angular/core';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { QuikService } from '../quik.service';
+import { IQuik } from '../models';
 
-export interface IQuik {
-  index: number
-  row: number
-  level: number
-  active: boolean
-}
 
 @Component({
   selector: 'quik',
@@ -31,11 +26,11 @@ export class QuikComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const { index, level } = this.quik;
+    const { index, level: { matrix } } = this.quik;
     this.style = this.element.nativeElement.style;
-    this.style.zIndex = (level - index % level).toString();
-    const margin = 100 / (level * 2);
-    const size = `calc(100%/${level} - ${margin * 2}px)`;
+    this.style.zIndex = (matrix - index % matrix).toString();
+    const margin = 100 / (matrix * 2);
+    const size = `calc(100%/${matrix} - ${margin * 2}px)`;
     this.style.width = size;
     this.style.paddingTop = size;
     this.style.margin = `${margin}px`;
@@ -54,8 +49,14 @@ export class QuikComponent implements OnInit, OnDestroy {
   }
 
   private setImage() {
-    const randomQuik = this.quikService.getRandomImage();
-    this.image = this.sanitizer.bypassSecurityTrustUrl(randomQuik);
+    let quikImage;
+    if (this.quik.level.name === 'john') {
+      quikImage = this.quikService.images[0];
+    }
+    else {
+      quikImage = this.quikService.getRandomImage();
+    }
+    this.image = this.sanitizer.bypassSecurityTrustUrl(quikImage);
   }
 
   private startAnimation() {

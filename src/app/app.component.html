@@ -1,13 +1,20 @@
 <div class="ui">
-  <button (click)="start()">start</button>
-  <p *ngIf="quikService.state == true">{{quikService.timer / 1000}}</p>
+  <p class="title">Tape Quik !</p>
   <div>
-    <button (click)="setLevel(3)">easy</button>
-    <button (click)="setLevel(4)">medium</button>
-    <button (click)="setLevel(5)">hard</button>
-    <button (click)="setLevel(6)">infernal</button>
+    <button *ngFor="let level of quikService.levels" [class.active]="level.name === quikService.config.level.name"
+      (click)="restart(level)">
+      {{level.name}}
+    </button>
   </div>
 </div>
+
+
+<div class="ui-bottom">
+  <div class="timer">{{quikService.timer / 1000}}</div>
+  <button class="start" [disabled]="quikService.state === true" (click)="start()">start</button>
+</div>
+
+<div class="playerState" *ngIf="quikService.playerState">{{quikService.playerState}}</div>
 
 <main>
   <div class="main-floor"></div>

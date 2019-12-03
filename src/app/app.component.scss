@@ -1,17 +1,19 @@
 $board-color: black;
-$board-size:100px;
+$board-width: 50vh;
+$board-height:100px;
+$button-color:rgb(62, 162, 228);
 
 main{
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 50vh;
-  height: 50vh;
+  width: $board-width;
+  height: $board-width;
   // transform: translate(-50%, -50%) rotate(-30deg) skew(25deg);
   transform: translate(-50%, -50%) rotate(-35deg) skew(17deg);
   background: $board-color;
   backface-visibility: hidden;
-  perspective: 50vh;
+  perspective: $board-width;
   padding: 10px;
   border-radius: 1px;
   &:before,
@@ -22,17 +24,17 @@ main{
     border-radius: 1px;
   }
   &:before{
-    top: $board-size/2;
-    left: -$board-size;
+    top: $board-height/2;
+    left: -$board-height;
     height: 100%;
-    width: $board-size;
+    width: $board-height;
     background: adjust-color($board-color, $lightness: 5%);
     transform: skewY(-45deg);
   }
   &:after{
-    bottom: -$board-size;
-    left: -$board-size/2;
-    height: $board-size;
+    bottom: -$board-height;
+    left: -$board-height/2;
+    height: $board-height;
     width: 100%;
     background: adjust-color($board-color, $lightness: 10%);
     transform: skewX(-45deg);
@@ -43,13 +45,13 @@ main{
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 50vh;
-  height: 50vh;
+  width: $board-width;
+  height: $board-width;
   transform: translate(-76%, -24%);
   background: adjust-color($board-color, $lightness: 15%);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  perspective: 50vh;
+  perspective: $board-width;
   padding: 10px;
   border-radius: 1px;
   z-index: 1;
@@ -58,10 +60,10 @@ main{
     content: '';
     position: absolute;
     border-radius: 1px;
-    top: -50px;
-    right: -100px;
+    top: -$board-height/2;
+    right: -$board-height;
     height: 100%;
-    width: 100px;
+    width: $board-height;
     background: adjust-color($board-color, $lightness: 20%);
     transform: skewY(-45deg);
     z-index: 999;
@@ -72,4 +74,90 @@ main{
   display: flex;
   flex-flow: row wrap;
   cursor: url('/assets/cursor.png') 12 24, pointer;
+}
+
+.ui{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+button{
+  appearance: none;
+  background: #F8F8F8;
+  border: none;
+  border-radius: 4px;
+  color: #000;
+  padding: 8px 16px;
+  margin: 2px 4px;
+  box-shadow: 1px 1px 1px 0 rgba(0,0,0,.26);
+  cursor: url('/assets/cursor.png') 12 24, pointer;
+  transition: all 0.5s;
+  backface-visibility: hidden;
+  outline: none;
+  &:hover{
+    box-shadow: 1px 1px 1px 0 rgba(0,0,0,0);
+    transform: translate3d(0, 1px, 0);
+  }
+  &:active{
+    cursor: url('/assets/cursor-hover.png') 24 36, pointer;
+  }
+  &:disabled{
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  &.active,
+  &.start{
+    background: $button-color;
+    color: white;
+  }
+}
+
+.start{
+  position: absolute;
+  padding: 12px 24px;
+  margin: 36px 0;
+  bottom: 0;
+  left: 0;
+  font-size: 36px;
+}
+
+.title{
+  font-size: 40px;
+  margin: 0;  
+}
+
+.ui-bottom{    
+  width: 80vh;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate3d(-50%,0,0);
+}
+
+.timer{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 100px;
+  margin: 0 24px;
+}
+
+.playerState{
+  position: fixed;
+  width: 100%;
+  font-size: 50px;
+  padding: 50px 0;
+  background: #fff;
+  top: 50%;
+  z-index: 1;
+  left: 0%;
+  transform: translate3d(0, -50%, 0);
+  text-align: center;
+  box-shadow: 0 0 12px 0 rgba(0,0,0,.26);
 }
