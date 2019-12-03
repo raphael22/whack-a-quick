@@ -13,7 +13,7 @@ export class QuikComponent implements OnInit, OnDestroy {
   @HostBinding('class.hidden') hidden: boolean = false;
   @Input() quik: IQuik;
   private style: CSSStyleDeclaration;
-  public image: SafeUrl;
+  public image: any;
   public animationDuration: string;
   private animationName = 'quik'
 

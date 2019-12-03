@@ -8,7 +8,7 @@ import { IConfig, IQuik, ILevel, IMAGES, LEVELS, ELevel } from './models';
   providedIn: 'root'
 })
 export class QuikService {
-  private state: boolean;
+  public state: boolean;
   public state$: ReplaySubject<boolean> = new ReplaySubject(1);
   public playerState: string;
 
