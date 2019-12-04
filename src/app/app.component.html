@@ -1,7 +1,8 @@
 <div class="ui">
   <p class="title">Tape Quik !</p>
   <div>
-    <button *ngFor="let level of quikService.levels" [class.active]="level.name === quikService.config.level.name"
+    <button *ngFor="let level of quikService.levels" 
+    [class.active]="level.name === quikService.config.level.name"
       (click)="restart(level)">
       {{level.name}}
     </button>
